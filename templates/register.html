@@ -1,8 +1,8 @@
 {% extends '_layout.html' %}
 
 {% block content %}
-    <h1>LOGIN PAGE</h1>
-    <form method="POST" action="/">
+    <h1>Registration PAGE</h1>
+    <form method="POST" action="/register">
         {{ form.csrf_token() }}
 
         {{ form.email.label }}
@@ -11,6 +11,6 @@
         {{ form.password.label }}
         {{ form.password }}
 
-        <button type="submit" value="Submit">SUBMIT</button>
+        <button type="submit" value="Submit">Register</button>
     </form>
 {% endblock %}
