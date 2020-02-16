@@ -66,9 +66,10 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        return '<p>registered. thanks.</p><p>email: {}, password: {}'.format(form.email.data, form.password.data)
-
+        # return '<p>registered. thanks.</p><p>email: {}, password: {}'.format(form.email.data, form.password.data)
+        return render_template('confirmation.html')
     return render_template('register.html', form=form)
+
 
 @app.route('/logout')
 def logout():
