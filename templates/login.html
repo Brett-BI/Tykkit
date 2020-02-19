@@ -12,5 +12,7 @@
         {{ form.password }}
 
         <button type="submit" value="Submit">SUBMIT</button>
+
+        <p>Don't have an account? Register <a href="{{ url_for('register') }}">here</a>.</p>
     </form>
 {% endblock %}
