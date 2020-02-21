@@ -1,8 +1,9 @@
 from flask import Flask, render_template, redirect, url_for
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, Email
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 
@@ -18,6 +19,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+Bootstrap = Bootstrap(app)
+
 
 # models
 class User(UserMixin, db.Model):
@@ -30,11 +33,13 @@ class User(UserMixin, db.Model):
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(), Length(max=70)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=60)])
+    submit = SubmitField(label='submit')
 
 
 class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(), Length(max=70)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=60)])
+    submit = SubmitField(label='submit')
 
 
 @login_manager.user_loader
@@ -65,8 +70,6 @@ def register():
         user = User(email=form.email.data, password=pw_hash)
         db.session.add(user)
         db.session.commit()
-
-        # return '<p>registered. thanks.</p><p>email: {}, password: {}'.format(form.email.data, form.password.data)
         return render_template('confirmation.html')
     return render_template('register.html', form=form)
 

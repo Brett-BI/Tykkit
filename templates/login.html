@@ -1,16 +1,9 @@
 {% extends '_layout.html' %}
-
+{% import 'bootstrap/wtf.html' as wtf %}
 {% block content %}
-    <h1>LOGIN PAGE</h1>
+    <h1>Login</h1>
     <form method="POST" action="/">
         {{ form.csrf_token() }}
-
-        {{ form.email.label }}
-        {{ form.email }}
-
-        {{ form.password.label }}
-        {{ form.password }}
-
-        <button type="submit" value="Submit">SUBMIT</button>
+        {{ wtf.quick_form(form) }}
     </form>
 {% endblock %}
