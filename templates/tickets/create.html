@@ -1,0 +1,26 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+    <h1>CREATE TICKET</h1>
+
+    <form method="POST" action="/create">
+        {{ form.csrf_token() }}
+
+        {{ form.title.label }}
+        {{ form.title }}
+
+        {{ form.description.label }}
+        {{ form.description }}
+
+        {{ form.status.label }}
+        {{ form.status }}
+
+        {{ form.priority.label }}
+        {{ form.priority }}
+
+        <button type="submit" value="Submit">CREATE</button>
+
+        <p>Go <a href="{{ url_for('dashboard') }}">back</a>.</p>
+    </form>
+
+{% endblock %}
