@@ -68,7 +68,6 @@ class Priority(db.Model):
         return self.name
 
 
-
 # forms
 class LoginForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(), Length(max=70)])
