@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Login</h1>
     <form method="POST" action="/">
-        {{ form.csrf_token() }}
         {{ wtf.quick_form(form) }}
+    hi
     </form>
 {% endblock %}
