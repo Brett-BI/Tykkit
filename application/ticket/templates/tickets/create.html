@@ -1,4 +1,4 @@
-{% extends '_layout.html' %}
+{% extends '../_layout.html' %}
 
 {% block content %}
     <h1>CREATE TICKET</h1>
@@ -20,7 +20,7 @@
 
         <button type="submit" value="Submit">CREATE</button>
 
-        <p>Go <a href="{{ url_for('dashboard') }}">back</a>.</p>
+        <p>Go <a href="{{ url_for('ticket_bp.dashboard') }}">back</a>.</p>
     </form>
 
 {% endblock %}
