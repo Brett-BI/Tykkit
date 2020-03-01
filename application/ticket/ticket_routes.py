@@ -8,10 +8,9 @@ from flask_login import login_required, login_user, logout_user
 from application.models import User, Ticket, Status, Priority
 from application import db, bcrypt
 
-
 ticket_bp = Blueprint('ticket_bp', __name__,
-                       template_folder='templates',
-                       static_folder='static')
+                      template_folder='templates',
+                      static_folder='static')
 
 
 class LoginForm(FlaskForm):
@@ -89,7 +88,6 @@ def create_ticket():
     form = CreateTicketForm()
 
     if form.validate_on_submit():
-
         print(request.form.get('status'))
         ticket = Ticket(title=form.title.data, description=form.description.data,
                         priority=request.form.get('priority'), status=request.form.get('status'))
@@ -105,4 +103,3 @@ def create_ticket():
 @login_required
 def my_tickets():
     return render_template('tickets/my-tickets.html')
-
