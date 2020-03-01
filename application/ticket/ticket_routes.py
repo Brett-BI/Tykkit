@@ -32,6 +32,7 @@ class CreateTicketForm(FlaskForm):
 @ticket_bp.route('/dashboard')
 @login_required
 def dashboard():
+    print("in dashboard")
     return render_template('dashboard.html')
 
 

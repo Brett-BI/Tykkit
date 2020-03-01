@@ -2,7 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 {% block content %}
     <h3>Login</h3>
-    <form method="POST" action="/">
+    <form method="POST" action="{{ url_for("auth_bp.login") }}">
         {{ wtf.quick_form(form) }}
     hi
     </form>
