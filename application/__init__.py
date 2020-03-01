@@ -24,6 +24,12 @@ def create_app():
     from .ticket import ticket_routes
     app.register_blueprint(ticket_routes.ticket_bp)
 
+    from .registration import registration_routes
+    app.register_blueprint(registration_routes.registration_bp)
+
+    from .auth import auth_routes
+    app.register_blueprint(auth_routes.auth_bp)
+
     return app
 
 
