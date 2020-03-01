@@ -18,6 +18,10 @@ header {
     margin-right: 400px
 }
 
+.content.container {
+    max-width: 500px;
+}
+
 .welcome {
     text-align: center;
     font-family: 'Gamja Flower', cursive;
