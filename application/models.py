@@ -1,7 +1,9 @@
-from application import db, login_manager
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 import datetime
+
+from application import db, login_manager, bcrypt
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -12,6 +14,18 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.String(70), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
+
+    @staticmethod
+    def encrypt_password(password):
+        pw = bcrypt.generate_password_hash(password)
+
+        return pw.decode("utf-8")
+
+
+    @staticmethod
+    def check_password(db_password, form_password):
+
+        return bcrypt.check_password_hash(db_password, form_password)
 
 
 class Status(db.Model):

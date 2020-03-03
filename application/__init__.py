@@ -21,11 +21,20 @@ def create_app():
     bcrypt.init_app(app)
     bootstrap.init_app(app)
 
-    from .ticket import ticket_routes
-    app.register_blueprint(ticket_routes.ticket_bp)
+    with app.app_context():
+        db.create_all()
 
-    return app
+        from .ticket import ticket_routes
+        app.register_blueprint(ticket_routes.ticket_bp)
 
+        from .registration import registration_routes
+        app.register_blueprint(registration_routes.registration_bp)
 
-from application import models
+        from .auth import auth_routes
+        app.register_blueprint(auth_routes.auth_bp)
+
+        from .main import main_routes
+        app.register_blueprint(main_routes.main_bp)
+
+        return app
 
