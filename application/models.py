@@ -23,9 +23,9 @@ class User(UserMixin, db.Model):
 
 
     @staticmethod
-    def check_password(self, db_password, form_password):
+    def check_password(db_password, form_password):
 
-        return bcrypt.check_password_hash(db_password, form_password.data.encode('utf-8'))
+        return bcrypt.check_password_hash(db_password, form_password)
 
 
 class Status(db.Model):
