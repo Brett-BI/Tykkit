@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_bootstrap import Bootstrap
+from flask_migrate import Migrate
 
 
 db = SQLAlchemy()
@@ -10,6 +11,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 bcrypt = Bcrypt()
 bootstrap = Bootstrap()
+migrate = Migrate()
 
 
 def create_app():
@@ -20,9 +22,10 @@ def create_app():
     login_manager.init_app(app)
     bcrypt.init_app(app)
     bootstrap.init_app(app)
+    migrate.init_app(app, db)
 
     with app.app_context():
-        db.create_all()
+        #db.create_all()
 
         from .ticket import ticket_routes
         app.register_blueprint(ticket_routes.ticket_bp)
