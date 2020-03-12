@@ -3,10 +3,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import InputRequired, Length, Email
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from application.models import User, Ticket, Status, Priority
 from application import db, bcrypt
+from application import filters
 
 ticket_bp = Blueprint('ticket_bp', __name__,
                       template_folder='templates',
@@ -33,6 +34,16 @@ class CreateTicketForm(FlaskForm):
 def dashboard():
     print("in dashboard")
     return render_template('dashboard.html')
+
+
+@ticket_bp.route("/me")
+@login_required
+def my_account():
+
+    # get account information from flask_login (stores all user information, apparently)
+    print(current_user.email)   
+
+    return render_template("my_account.html", user=current_user)
 
 
 @ticket_bp.route('/create', methods=['GET', 'POST'])

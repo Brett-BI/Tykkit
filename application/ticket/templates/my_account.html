@@ -1,0 +1,13 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+
+<p>Email: {{ user.email }}</p>
+<p>First Name: {% if user.first_name %}{{ user.first_name }}{% endif %}</p>
+<p>Last Name: {% if user.last_name %}{{ user.last_name }}{% endif %}</p>
+{# custom filter here using strftime() method #}
+<p>Since {{ user.registration_date|datetimeformat("%B %Y") }}</p>
+<p>Role: {% if user.role %}{{ user.role }}{% endif %}</p>
+
+<p><a href="{{ url_for("ticket_bp.dashboard") }}">Back to Dashboard</a></p>
+{% endblock %}

@@ -39,5 +39,8 @@ def create_app():
         from .main import main_routes
         app.register_blueprint(main_routes.main_bp)
 
+        from . import filters
+        app.register_blueprint(filters.filters)
+
         return app
 
