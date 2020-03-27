@@ -2,12 +2,30 @@
 
 {% block content %}
 
-<p>Email: {{ user.email }}</p>
-<p>First Name: {% if user.first_name %}{{ user.first_name }}{% endif %}</p>
-<p>Last Name: {% if user.last_name %}{{ user.last_name }}{% endif %}</p>
-{# custom filter here using strftime() method #}
-<p>Since {{ user.registration_date|datetimeformat("%B %Y") }}</p>
-<p>Role: {% if user.role %}{{ user.role }}{% endif %}</p>
+<h2>My Account</h2>
+
+{% if user.role %} 
+    <h4>{{ user.role }}</h4>
+{% endif %}
+
+<small>Member since {{ user.registration_date|datetimeformat("%B %Y") }}</small></h2>
+
+<br/>
+
+<form method="POST" action="{{ url_for('ticket_bp.my_account') }}">
+
+<p>{{ form.email.label }}
+{{ form.email }}</p>
+
+<p>{{ form.first_name.label }}
+{{ form.first_name }}</p>
+
+<p>{{ form.last_name.label }}
+{{ form.last_name }}</p>
+
+<button type="submit">Update</button>
+
+</form>
 
 <p><a href="{{ url_for("ticket_bp.dashboard") }}">Back to Dashboard</a></p>
 {% endblock %}
