@@ -42,8 +42,8 @@ def my_account():
         return redirect(url_for('ticket_bp.my_account'))
 
     # get account information from flask_login (stores all user information, apparently)
-    print(current_user.email)
-    print(current_user.id)
+    # print(current_user.email)
+    # print(current_user.id)
 
     return render_template("my_account.html", user=current_user, form=form)
 
