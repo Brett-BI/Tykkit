@@ -3,29 +3,16 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SubmitField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import InputRequired, Length, Email
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from application.models import User, Ticket, Status, Priority
 from application import db, bcrypt
+from application import filters
+from . import ticket_forms
 
 ticket_bp = Blueprint('ticket_bp', __name__,
                       template_folder='templates',
                       static_folder='static')
-
-
-def get_ticket_statuses():
-    return Status.query.all()
-
-
-def get_ticket_priorities():
-    return Priority.query.all()
-
-
-class CreateTicketForm(FlaskForm):
-    title = StringField('title', validators=[InputRequired(), Length(min=1, max=100)])
-    description = TextAreaField('description')
-    status = QuerySelectField('status', query_factory=get_ticket_statuses, allow_blank=True, get_label='name')
-    priority = QuerySelectField('priority', query_factory=get_ticket_priorities, allow_blank=True, get_label='name')
 
 
 @ticket_bp.route('/dashboard')
@@ -35,10 +22,36 @@ def dashboard():
     return render_template('dashboard.html')
 
 
+@ticket_bp.route("/dashboard/me", methods=["GET", "POST"])
+@login_required
+def my_account():
+
+    form = ticket_forms.AccountInformationForm(obj=current_user)
+
+    if request.method == "POST":
+        form.validate_on_submit()
+
+        updated_user = User.query.filter_by(id=current_user.id)
+        if updated_user:
+            updated_user.update(dict(email=form.email.data, first_name=form.first_name.data, last_name=form.last_name.data))
+        
+            db.session.commit()
+        else:
+            return "Something went wrong updating your information. Sorry about that."
+
+        return redirect(url_for('ticket_bp.my_account'))
+
+    # get account information from flask_login (stores all user information, apparently)
+    # print(current_user.email)
+    # print(current_user.id)
+
+    return render_template("my_account.html", user=current_user, form=form)
+
+
 @ticket_bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create_ticket():
-    form = CreateTicketForm()
+    form = ticket_forms.CreateTicketForm()
 
     if form.validate_on_submit():
         print(request.form.get('status'))
